@@ -1,3 +1,8 @@
+import os
+if os.path.exists("best_score.txt"):
+    with open("best_score.txt","r") as file:
+        best_score=int(file.read() )
+else:best_score=None
 import random
 import sys
 level=input("難易度を選択してください")
@@ -10,7 +15,6 @@ elif level=="3":
 else:
      print("無効な選択です。")
      sys.exit()
-
 while True:
  answer = random.randint(1, max_number)
  count = 0
@@ -24,6 +28,12 @@ while True:
             print("もっと小さい！")
    else:
             print(f"正解です！試行回数は {count} 回です。")
+            if best_score is None or count<best_score:
+                    best_score=count
+                    with open("best_score.txt","w") as file:
+                         file.write(str(best_score))
+            print(f"現在の最高記録は{best_score} 回")
+                         
             break
    if count==5:
             print("失敗です。GG")
